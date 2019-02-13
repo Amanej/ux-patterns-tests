@@ -66,8 +66,10 @@
                 Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
             </p>            
             <input type="text" name="secondText" id="secondText" placeholder="første tekst" v-on:focus="showInput()" />
-            <div class="showCustomInput" v-model="text" ref="main" contenteditable>
-                {{text}}
+            <div class="showCustomInput" v-if="showCustomInput">
+                <div ref="main" contenteditable>
+                    {{text}}
+                </div>
             </div>
         </div>
     </body>
@@ -81,14 +83,9 @@
             color: white;
             width: 100%;
             width: 87%;
-            /*display: none;*/
         }
         textarea {
             width: 100%;
-        }
-        div.showCustomInput:focus {
-            display: block;
-            background: purple;
         }
         input[type="text"] {
             font-size: 40px;
@@ -110,8 +107,10 @@
             methods: {
                 showInput() {
                     //console.log('showInput')
-                    //this.showCustomInput = !this.showCustomInput;
-                    this.$refs.main.focus();
+                    this.showCustomInput = !this.showCustomInput;
+                    this.$nextTick(function() {
+                        this.$refs.main.focus();
+                    })
                 }
             }
         })
